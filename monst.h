@@ -5,6 +5,8 @@
 #include "stats.h"
 #include "map.h"
 
+struct level;
+
 struct monst_type {
 	char symbol;
 	const char *name;
@@ -22,7 +24,7 @@ struct monst {
 	struct stats stats;
 };
 
-struct monst *generate_monster(const struct monst_type *, map);
+struct monst *generate_monster(struct level *);
 char *body_text(struct monst *, const char *, unsigned int, const char *);
 
 

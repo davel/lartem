@@ -2,6 +2,7 @@
 #include <string.h>
 
 #include "monst.h"
+#include "level.h"
 
 
 /* Standard bodys */
@@ -44,14 +45,15 @@ const struct monst_type mons[] = {
 
 
 
-struct monst *generate_monster(const struct monst_type *type,
-			       map m)
+struct monst *generate_monster(struct level *level)
 {
+	map m = level->map;
+
 	struct monst *monster =
 		(struct monst *) malloc(sizeof(struct monst));
 
 	monster->name = NULL;
-	monster->type = type;
+	monster->type = mons;  /* TODO: decide what type of monster */
 
 	monster->current_map = m;
 
