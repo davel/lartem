@@ -1,7 +1,7 @@
 CC = gcc -Wall -g
 LD = gcc -lpanel -lncurses -lefence -g
 
-OBJS = main.o display.o player.o role.o monst.o ask.o level.o map.o util.o
+OBJS = main.o display.o player.o role.o monst.o ask.o level.o map.o util.o stats.o
 
 lartem: $(OBJS)
 	$(LD) $(OBJS) -o lartem
