@@ -82,7 +82,8 @@ int main(int argc, char *argv[])
 		case 'g':
 		case 'G':
 			k = ask_key("In which direction?");
-			running = 1;
+			c = key_to_direction(k);
+			if((c.x || c.y) && player_move(c.x, c.y)) running = 1;
 			break;
 		}
 
