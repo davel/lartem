@@ -12,23 +12,19 @@
 #include "level.h"
 #include "util.h"
 
+void seed_rng();
+
+
 struct level levels[100];
+
 
 int main(int argc, char *argv[])
 {
-	unsigned long seed;
-	int fd;
-
 	int k;
 	struct coord c;
 	unsigned int i;
 
-
-	fd = open("/dev/random", O_RDONLY);
-	if (fd<1) { fprintf(stderr, "No random numbers :-(\n"); exit(1); }
-	read(fd, &seed, sizeof(unsigned long));
-	close(fd);
-	srandom(seed);
+	seed_rng();
 
 	display_init();
 
@@ -63,4 +59,25 @@ int main(int argc, char *argv[])
 	}
 
 	return 0;
+}
+
+
+
+void seed_rng()
+{
+	unsigned long seed;
+	int fd;
+
+	fd = open("/dev/random", O_RDONLY);
+
+	if (fd < 1) {
+		fprintf(stderr, "No random numbers :-(\n");
+		exit(1);
+	}
+
+	read(fd, &seed, sizeof(unsigned long));
+
+	close(fd);
+
+	srandom(seed);
 }
