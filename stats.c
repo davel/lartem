@@ -41,3 +41,30 @@ void stats_heal(struct stats *stats)
 	}
 }
 
+
+
+unsigned int stats_hurt(struct stats *stats, unsigned int damage)
+{
+	double reduction;
+
+	/*
+	  Ben's hurting people algorithm:
+
+	  Take a base damage value.
+
+	  Generate a random number between 0 and constitution.
+
+	  Reduce damage by a proportion of (random number) / 20
+
+	  Giving a max reduction of 80% (with 16 con, I think)
+	*/
+
+	reduction = ((double) (random() % stats->co)) / 20;
+
+	damage *= (1 - reduction);
+
+	if(stats->hp >= damage) stats->hp -= damage;
+	else stats->hp = 0;
+
+	return damage;
+}

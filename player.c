@@ -47,8 +47,6 @@ int player_init()
 	player.stats.hpmax = 8 + (random() % 8);
 	player.stats.hp = player.stats.hpmax;
 
-	player.stats.co = 6;
-
 	player.turn = 0;
 
 	pmonst.type = &pmonst_type;
@@ -397,31 +395,12 @@ void player_look()
 
 void player_hurt(unsigned int damage)
 {
-	double reduction;
+	damage = stats_hurt(&player.stats, damage);
 
-	/*
-	  Ben's hurting people algorithm:
-
-	  Take a base damage value.
-
-	  Generate a random number between 0 and constitution.
-
-	  Reduce damage by a proportion of (random number) / 20
-
-	  Giving a max reduction of 80% (I think)
-	*/
-
-	reduction = ((double) (random() % player.stats.co)) / 20;
-
-	damage *= (1 - reduction);
-
-	if(player.stats.hp <= damage) {
-		/* Player is dead, do something intelligent */
-
-		exit(0);
+	if(player.stats.hp == 0) {
+		/* Player is dead, do something about it */
 	}
 
-	player.stats.hp -= damage;
 	player_status();
 	msg_printf("  [%u pts.]", damage);
 }

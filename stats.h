@@ -19,5 +19,6 @@ struct stats {
 
 int test_stat(struct stats *, unsigned int, int);
 void stats_heal(struct stats *);
+unsigned int stats_hurt(struct stats *, unsigned int);
 
 #endif
