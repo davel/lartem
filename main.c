@@ -39,7 +39,9 @@ int main(int argc, char *argv[])
 		main_clear();
 		player_poll();
 
-		k = display_getch();
+		do {
+			k = display_getch();
+		} while(k == ' ');
 
 		msg_clear();
 
