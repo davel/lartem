@@ -18,6 +18,9 @@ int main(int argc, char *argv[])
 	unsigned long seed;
 	int fd;
 
+	unsigned int i;
+
+
 	fd = open("/dev/random", O_RDONLY);
 	if (fd<1) { fprintf(stderr, "No random numbers :-(\n"); exit(1); }
 	read(fd, &seed, sizeof(unsigned long));
@@ -62,6 +65,10 @@ int main(int argc, char *argv[])
 			player_move(-1, -1);
 			break;
 		}
+
+
+		for(i = 0; i < levels[0].nmonst; i++)
+			monster_poll(levels[0].monsters[i]);
 	}
 
 	return 0;

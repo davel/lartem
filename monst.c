@@ -71,6 +71,29 @@ struct monst *generate_monster(struct level *level)
 
 
 
+void monster_poll(struct monst *monster)
+{
+	int dx, dy;
+	struct map_square *oldsq, *newsq;
+
+	dx = (random() % 3) - 1;
+	dy = (random() % 3) - 1;
+
+	oldsq = monster->current_map + MAP_OFFSET(monster->x, monster->y);
+	newsq = monster->current_map + MAP_OFFSET(monster->x + dx,
+						  monster->y + dy);
+
+	if(newsq->tile == TILE_EMPTY && !newsq->monster) {
+		monster->x += dx;
+		monster->y += dy;
+
+		oldsq->monster = NULL;
+		newsq->monster = monster;
+	}
+}
+
+
+
 char *body_text(struct monst *monst,
 		const char *str1,
 		unsigned int part,

@@ -25,6 +25,7 @@ struct monst {
 };
 
 struct monst *generate_monster(struct level *);
+void monster_poll(struct monst *);
 char *body_text(struct monst *, const char *, unsigned int, const char *);
 
 
