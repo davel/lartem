@@ -4,6 +4,7 @@
 #include "map.h"
 #include "display.h"
 #include "monst.h"
+#include "util.h"
 
 
 #define MAX_ROOM_WIDTH 10
@@ -41,15 +42,6 @@ void create_room(map m, int xx, int yy, int width, int height);
 void create_corridor(map m, int xcorr1, int ycorr1, int xcorr2, int ycorr2);
 int evaluate_room(map m);
 
-static int limit(int i, int l) {
-	if (i>l) return l; else return i;
-}
-
-static int ourrand(int min, int max) {
-	if (min==max) return min;
-	if (max<min) { fprintf(stderr, "Max is smaller than min: %d %d\n", min, max); exit(1); }
-	return (random() % (max-min+1))+min;
-}
 
 map generate_map()
 {
