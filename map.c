@@ -89,6 +89,7 @@ map generate_map()
 		xcorr1 = xcorr2;
 		ycorr1 = ycorr2;
 	}
+	
 	return m;
 }
 
@@ -98,8 +99,8 @@ void map_plot(map m, unsigned int x, unsigned int y)
 {
 	struct map_square *sq = m + MAP_OFFSET(x, y);
 
-//	if(sq->monster) main_plot(x, y, COL_WHITE, sq->monster->type->symbol);
-//	else
+	if(sq->monster) main_plot(x, y, COL_WHITE, sq->monster->type->symbol);
+	else
 
 	main_plot(x, y, tile_cols[sq->tile], tile_chars[sq->tile]);
 }
@@ -117,7 +118,8 @@ void create_room(map m, int xx, int yy, int width, int height) {
 
 	for (x=xx; x<=(xx+width); x++) {
 		for (y=yy; y<=(yy+height); y++) {
-			struct map_square s;
+			struct map_square s = m[MAP_OFFSET(x,y)];
+
 			s.tile = TILE_EMPTY;
 			if (x==xx || x==(xx+width))  s.tile = TILE_WALL_VERT;
 			if (y==yy || y==(yy+height)) s.tile = TILE_WALL_HORIZ;
