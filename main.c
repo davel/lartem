@@ -43,11 +43,7 @@ int main(int argc, char *argv[])
 
 		turn_taken = 0;
 
-		if(!running) {
-			do {
-				k = display_getch();
-			} while(k == ' ');
-		}
+		if(!running) k = display_getch();
 
 		msg_clear();
 
@@ -97,6 +93,9 @@ int main(int argc, char *argv[])
 			c = player_select_square();
 			msg_clear();
 			player_remote_look(c.x, c.y);
+			break;
+		case '.':
+			turn_taken = 1;
 			break;
 		}
 
