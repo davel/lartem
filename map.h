@@ -5,6 +5,10 @@
 #define MAP_Y 20
 #define MAP_OFFSET(x, y) (x) + ((y) * MAP_X)
 
+
+struct monst;
+
+
 struct map_square {
 	enum {
 		TILE_EMPTY,
@@ -18,6 +22,8 @@ struct map_square {
 		TILE_STAIR_DOWN,
 		TILE_UNREACHABLE
 	} tile;
+
+	struct monst *monster;
 };
 
 #define TILE_IS_OPAQUE(t) (t) == TILE_WALL_HORIZ || (t) == TILE_WALL_VERT || (t) == TILE_DOOR_LOCKED || (t) == TILE_DOOR_CLOSED

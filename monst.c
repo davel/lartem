@@ -44,13 +44,25 @@ const struct monst_type mons[] = {
 
 
 
-struct monst *generate_monster(const struct monst_type *type)
+struct monst *generate_monster(const struct monst_type *type,
+			       map m)
 {
 	struct monst *monster =
 		(struct monst *) malloc(sizeof(struct monst));
 
 	monster->name = NULL;
 	monster->type = type;
+
+	monster->current_map = m;
+
+	do {
+		monster->x = random() % MAP_X;
+		monster->y = random() % MAP_Y;
+
+	} while ((m[MAP_OFFSET(monster->x, monster->y)].tile != TILE_EMPTY) ||
+		 m[MAP_OFFSET(monster->x, monster->y)].monster);
+
+	m[MAP_OFFSET(monster->x, monster->y)].monster = monster;
 
 	return monster;
 }

@@ -3,6 +3,7 @@
 
 #include "body.h"
 #include "stats.h"
+#include "map.h"
 
 struct monst_type {
 	char symbol;
@@ -14,13 +15,14 @@ struct monst {
 	const char *name;
 	const struct monst_type *type;
 
+	map current_map;
 	int floor;
 	unsigned int x, y;
 
 	struct stats stats;
 };
 
-struct monst *generate_monster(const struct monst_type *);
+struct monst *generate_monster(const struct monst_type *, map);
 char *body_text(struct monst *, const char *, unsigned int, const char *);
 
 

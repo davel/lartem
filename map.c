@@ -1,10 +1,9 @@
+#include <stdio.h>
 #include <stdlib.h>
 
 #include "map.h"
-
 #include "display.h"
-#include <stdio.h>
-#include <stdlib.h>
+#include "monst.h"
 
 
 #define MAX_ROOM_WIDTH 10
@@ -62,7 +61,10 @@ map generate_map()
 	
 	m = calloc(MAP_X * MAP_Y, sizeof(struct map_square));
 
-	for (x = 0; x<MAP_X; x++) for (y=0; y<MAP_Y; y++) m[MAP_OFFSET(x, y)].tile = TILE_UNREACHABLE;
+	for (x = 0; x<MAP_X; x++) for (y=0; y<MAP_Y; y++) {
+		m[MAP_OFFSET(x, y)].tile = TILE_UNREACHABLE;
+		m[MAP_OFFSET(x, y)].monster = NULL;
+	}
 
 	while (evaluate_room(m)<(MAP_X*MAP_Y/3)) {
 		int x, y, w, h, h_max;
@@ -94,9 +96,12 @@ map generate_map()
 
 void map_plot(map m, unsigned int x, unsigned int y)
 {
-	main_plot(x, y,
-		  tile_cols[m[MAP_OFFSET(x, y)].tile],
-		  tile_chars[m[MAP_OFFSET(x, y)].tile]);
+	struct map_square *sq = m + MAP_OFFSET(x, y);
+
+//	if(sq->monster) main_plot(x, y, COL_WHITE, sq->monster->type->symbol);
+//      else
+
+	main_plot(x, y, tile_cols[sq->tile], tile_chars[sq->tile]);
 }
 
 
