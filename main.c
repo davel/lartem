@@ -65,6 +65,11 @@ int main(int argc, char *argv[])
 			msg_clear();
 			player_open(c.x, c.y);
 			break;
+		case 'k':
+			c = key_to_direction(ask_key("In which direction?"));
+			msg_clear();
+			player_kick(c.x, c.y);
+			break;
 		}
 
 

@@ -313,3 +313,40 @@ void player_close(int dx, int dy)
 
 	msg_printf("%s", message);
 }
+
+
+
+void player_kick(int dx, int dy)
+{
+	struct map_square *sq;
+	char *message;
+
+	sq = map_square(player.current_map, player.x + dx, player.y + dy);
+	if(!sq) return;
+
+	if(sq->monster) {
+		msg_printf("You kick the %s!", sq->monster->type->name);
+		return;
+	}
+
+	switch(sq->tile) {
+	case TILE_DOOR_CLOSED:
+		if(test_stat(&player.stats, STAT_STR, 0)) {
+			sq->tile = TILE_DOOR_BORKED;
+			message = "The door crashes open!";
+		} else message = "You kick the door hard, but it won't budge.";
+
+		break;
+
+	case TILE_WALL_HORIZ:
+	case TILE_WALL_VERT:
+		message = "You kick the wall.  Ouch!";
+		break;
+
+	default:
+		message = "You kick at empty space.";
+		break;
+	}
+
+	msg_printf("%s", message);
+}

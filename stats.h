@@ -17,6 +17,6 @@ struct stats {
 	unsigned int hp, hpmax;
 };
 
-int test_stat(struct stats *, unsigned int);
+int test_stat(struct stats *, unsigned int, int);
 
 #endif
