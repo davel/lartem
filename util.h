@@ -10,6 +10,8 @@ int ourrand(int, int);
 
 struct coord key_to_direction(char);
 
-const char *random_string(const char **);
+const void *random_element(const void **);
+
+#define random_string(s) (const char *) random_element((const void **) (s))
 
 #endif

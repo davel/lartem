@@ -70,8 +70,8 @@ struct coord key_to_direction(char key)
 
 
 
-/* Pick a random string from a NULL-terminated list */
-const char *random_string(const char **list)
+/* Pick a random element from a NULL-terminated list */
+const void *random_element(const void **list)
 {
 	int n = 0;
 
