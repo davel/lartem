@@ -91,7 +91,9 @@ void map_plot(map m, unsigned int x, unsigned int y)
 {
 	struct map_square *sq = m + MAP_OFFSET(x, y);
 
-	if(sq->monster) main_plot(x, y, COL_WHITE, sq->monster->type->symbol);
+	if(sq->monster) main_plot(x, y,
+				  sq->monster->type->colour,
+				  sq->monster->type->symbol);
 	else
 
 	main_plot(x, y, tile_cols[sq->tile], tile_chars[sq->tile]);

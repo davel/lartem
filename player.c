@@ -51,6 +51,7 @@ int player_init()
 
 	pmonst.type = &pmonst_type;
 	pmonst_type.symbol = '@';
+	pmonst_type.colour = COL_WHITE;
 
 	player_status();
 

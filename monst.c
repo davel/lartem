@@ -3,7 +3,7 @@
 
 #include "monst.h"
 #include "level.h"
-
+#include "display.h"
 
 /* Standard bodys */
 
@@ -39,8 +39,8 @@ const struct body server_body = {
 
 
 const struct monst_type mons[] = {
-	{ 'h', "User", &humanoid_body },
-	{ 'h', "Manager", &humanoid_body }
+	{ 'h', "User", &humanoid_body, COL_GREY },
+	{ 'h', "Manager", &humanoid_body, COL_RED }
 };
 
 
