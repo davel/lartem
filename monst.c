@@ -53,7 +53,7 @@ struct monst *generate_monster(struct level *level)
 	monster = (struct monst *) malloc(sizeof(struct monst));
 
 	monster->name = NULL;
-	monster->type = mons;  /* TODO: decide what type of monster */
+	monster->type = mons + (random() % 2);
 
 	monster->current_map = level->map;
 
