@@ -37,7 +37,7 @@ const struct body server_body = {
 };
 
 
-const struct monst mons[] = {
+const struct monst_type mons[] = {
 	{ 'h', "User", &humanoid_body },
 	{ 'h', "Manager", &humanoid_body }
 };
