@@ -38,14 +38,14 @@ void attack_player(struct monst *monster, struct player *player)
 	switch(attack_type) {
 	case ATTACK_USER:
 		msg_printf("The %s %s.",
-			   monster->type->name,
+			   monster_name(monster),
 			   random_string(user_attack_text));
 
 		player_hurt(5);
 		break;
 	case ATTACK_MANAGER:
 		msg_printf("The %s %s.",
-			   monster->type->name,
+			   monster_name(monster),
 			   random_string(manager_attack_text));
 		player_hurt(10);
 		break;
@@ -60,7 +60,7 @@ void attack_monster(struct player *player, struct monst *monster)
 
 	if(test_stat(&player->stats, STAT_DEX, 0)) {
 
-		msg_printf("You hit the %s.", monster->type->name);
+		msg_printf("You hit the %s.", monster_name(monster));
 
-	} else msg_printf("You miss the %s.", monster->type->name);
+	} else msg_printf("You miss the %s.", monster_name(monster));
 }

@@ -338,7 +338,7 @@ void player_kick(int dx, int dy)
 	if(!sq) return;
 
 	if(sq->monster) {
-		msg_printf("You kick the %s!", sq->monster->type->name);
+		msg_printf("You kick the %s!", monster_name(sq->monster));
 		return;
 	}
 

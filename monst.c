@@ -110,6 +110,15 @@ void monster_poll(struct monst *monster)
 
 
 
+const char *monster_name(struct monst *monst)
+{
+	//static char name[32];
+
+	return monst->type->name;
+}
+
+
+
 char *body_text(struct monst *monst,
 		const char *str1,
 		unsigned int part,
