@@ -178,6 +178,21 @@ void create_corridor(map m, int xcorr1, int ycorr1, int xcorr2, int ycorr2) {
 
 
 
+struct coord find_free_square(map m)
+{
+	struct coord c;
+
+	/* Okay, so I admit it's possible this code will never terminate. */
+	do {
+		c.x = random() % MAP_X;
+		c.y = random() % MAP_Y;
+	} while (!can_move_into_square(m, c.x, c.y));
+
+	return c;
+}
+
+
+
 int can_move_into_square(map m, unsigned int x, unsigned int y)
 {
 	struct map_square *sq = m + MAP_OFFSET(x, y);

@@ -6,6 +6,9 @@
 #define MAP_OFFSET(x, y) (x) + ((y) * MAP_X)
 
 
+#include "util.h"
+
+
 struct monst;
 
 
@@ -34,6 +37,7 @@ struct map_square {
 typedef struct map_square *map;
 
 map generate_map();
+struct coord find_free_square(map);
 int can_move_into_square(map, unsigned int, unsigned int);
 void map_plot(map, unsigned int, unsigned int);
 void dump_map(map);

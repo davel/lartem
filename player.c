@@ -9,6 +9,7 @@
 #include "role.h"
 #include "display.h"
 #include "map.h"
+#include "util.h"
 
 
 void shadow_scan(unsigned int, int, double, double);
@@ -76,13 +77,11 @@ void player_status()
 
 void player_set_map(map m)
 {
-	player.current_map = m;
+	struct coord c = find_free_square(m);
 
-	/* Okay, so I admit it's possible this code will never terminate. */
-	while (!can_move_into_square(m, player.x, player.y)) {
-		player.x = random() % MAP_X;
-		player.y = random() % MAP_Y;
-	}
+	player.current_map = m;
+	player.x = c.x;
+	player.y = c.y;
 }
 
 
