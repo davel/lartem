@@ -240,17 +240,30 @@ void player_move(int dx, int dy)
 
 void player_open(int dx, int dy)
 {
-	struct map_square *sq = map_square(player.current_map,
-					   player.x + dx,
-					   player.y + dy);
+	struct map_square *sq;
+	char *message;
 
+	sq = map_square(player.current_map, player.x + dx, player.y + dy);
 	if(!sq) return;
 
-	if(sq->tile != TILE_DOOR_CLOSED) {
-		msg_printf("You see no door there.");
-		return;
+	switch(sq->tile) {
+	case TILE_DOOR_CLOSED:
+		sq->tile = TILE_DOOR_OPEN;
+		message = "You open the door.";
+		break;
+
+	case TILE_DOOR_OPEN:
+		message = "That door is already open.";
+		break;
+
+	case TILE_DOOR_BORKED:
+		message = "That door is broken.";
+		break;
+
+	default:
+		message = "You see no door there.";
+		break;
 	}
 
-	sq->tile = TILE_DOOR_OPEN;
-	msg_printf("You open the door");
+	msg_printf("%s", message);
 }
