@@ -183,7 +183,7 @@ void main_plot(unsigned int x, unsigned int y, unsigned int col, char ch)
 
 
 
-void main_move()
+void main_move(unsigned int x, unsigned int y)
 {
 	wmove(win_main, y, x);
 }
