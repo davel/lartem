@@ -54,7 +54,7 @@ char *ask_str(const char *question, const char *def)
 {
 	char *str;
 
-	msg_printf("%s [%s] ", question, def);
+	msg_printf("%s [%s]", question, def);
 	str = msg_getstr();
 	msg_clear();
 
