@@ -24,7 +24,7 @@ struct monst_type pmonst_type;
 int player_init()
 {
 	int role, i;
-	struct passwd *pw; 
+	struct passwd *pw;
 	pw = getpwuid(getuid());
 
 	player.name = ask_str("What is your name?", pw->pw_name);
@@ -37,7 +37,7 @@ int player_init()
 
 	/* The player is placed into a sensible position in player_set_map() */
 	player.x = 0;
-	player.y = 0; 
+	player.y = 0;
 
 	player.xp = 0;
 
@@ -319,7 +319,6 @@ void player_close(int dx, int dy)
 void player_kick(int dx, int dy)
 {
 	struct map_square *sq;
-	char *message;
 
 	sq = map_square(player.current_map, player.x + dx, player.y + dy);
 	if(!sq) return;
@@ -333,22 +332,23 @@ void player_kick(int dx, int dy)
 	case TILE_DOOR_CLOSED:
 		if(test_stat(&player.stats, STAT_STR, 0)) {
 			sq->tile = TILE_DOOR_BORKED;
-			message = "The door crashes open!";
-		} else message = "You kick the door hard, but it won't budge.";
+			msg_printf("The door crashes open!");
+		}
+
+		else msg_printf("You kick the door hard, but it won't budge.");
 
 		break;
 
 	case TILE_WALL_HORIZ:
 	case TILE_WALL_VERT:
-		message = "You kick the wall.  Ouch!";
+		msg_printf("You kick the wall.  Ouch!");
+		player_hurt(5);
 		break;
 
 	default:
-		message = "You kick at empty space.";
+		msg_printf("You kick at empty space.");
 		break;
 	}
-
-	msg_printf("%s", message);
 }
 
 
@@ -378,4 +378,37 @@ void player_look()
 	}
 
 	msg_printf("There is %s here.", message);
+}
+
+
+
+void player_hurt(unsigned int damage)
+{
+	double reduction;
+
+	/*
+	  Ben's hurting people algorithm:
+
+	  Take a base damage value.
+
+	  Generate a random number between 0 and constitution.
+
+	  Reduce damage by a proportion of (random number) / 20
+
+	  Giving a max reduction of 80% (I think)
+	*/
+
+	reduction = ((double) (random() % player.stats.co)) / 20;
+
+	damage *= (1 - reduction);
+
+	if(player.stats.hp <= damage) {
+		/* Player is dead, do something intelligent */
+
+		exit(0);
+	}
+
+	player.stats.hp -= damage;
+	player_status();
+	msg_printf("  [%u pts.]", damage);
 }
