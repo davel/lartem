@@ -1,7 +1,7 @@
 #include <stdlib.h>
+#include <strings.h>
 
 #include "ask.h"
-
 #include "display.h"
 
 
@@ -50,13 +50,18 @@ int ask_opt(const char *question, struct option options[])
 
 
 
-char *ask_str(const char *question)
+char *ask_str(const char *question, const char *def)
 {
 	char *str;
 
-	msg_printf("%s ", question);
+	msg_printf("%s [%s]", question, def);
 	str = msg_getstr();
 	msg_clear();
+
+	if (strlen(str)==0) {
+		free(str);
+		return strdup(def);
+	}
 
 	return str;
 }

@@ -7,6 +7,6 @@ struct option {
 };
 
 int ask_opt(const char *, struct option *);
-char *ask_str(const char *);
+char *ask_str(const char *, const char *);
 
 #endif

@@ -1,4 +1,7 @@
 #include <stdlib.h>
+#include <unistd.h>
+#include <sys/types.h>
+#include <pwd.h>
 
 #include "player.h"
 
@@ -17,8 +20,10 @@ struct player player;
 int player_init()
 {
 	int role, i;
+	struct passwd *pw; 
+	pw = getpwuid(getuid());
 
-	player.name = ask_str("What is your name?");
+	player.name = ask_str("What is your name?", pw->pw_name);
 
 	role = ask_role();
 	if(role == -1) return -1;
