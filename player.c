@@ -9,6 +9,7 @@
 #include "role.h"
 #include "display.h"
 #include "map.h"
+#include "monst.h"
 #include "util.h"
 
 
@@ -16,6 +17,8 @@ void shadow_scan(unsigned int, int, double, double);
 
 
 struct player player;
+struct monst pmonst;
+struct monst_type pmonst_type;
 
 
 int player_init()
@@ -45,6 +48,9 @@ int player_init()
 	player.stats.hp = player.stats.hpmax;
 
 	player.turn = 0;
+
+	pmonst.type = &pmonst_type;
+	pmonst_type.symbol = '@';
 
 	player_status();
 
@@ -82,6 +88,8 @@ void player_set_map(map m)
 	player.current_map = m;
 	player.x = c.x;
 	player.y = c.y;
+
+	map_square(player.current_map, c.x, c.y)->monster = &pmonst;
 }
 
 
@@ -220,19 +228,24 @@ void shadow_scan(unsigned int octant,
 
 void player_move(int dx, int dy)
 {
+	struct map_square *sq;
 	int xx, yy;
 
 	xx = player.x + dx;
 	yy = player.y + dy;
 
-	if(!is_map_square(xx, yy)) return;
+	sq = map_square(player.current_map, xx, yy);
+	if(!sq) return;
 
 	// Eventually this'll probably make us attack the monster
-	if(player.current_map[MAP_OFFSET(xx, yy)].monster) return;
+	if(sq->monster) return;
 
 	if(can_move_into_square(player.current_map, xx, yy)) {
+		player.current_map[MAP_OFFSET(player.x,
+					      player.y)].monster = NULL;
 		player.x = xx;
 		player.y = yy;
+		sq->monster = &pmonst;
 	}
 }
 
