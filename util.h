@@ -2,7 +2,7 @@
 #define UTIL_H
 
 struct coord {
-	unsigned int x, y;
+	int x, y;
 };
 
 int limit(int, int);
