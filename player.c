@@ -405,5 +405,5 @@ void player_hurt(unsigned int damage)
 	}
 
 	player_status();
-	msg_printf("  [%u pts.]", damage);
+	msg_printf("[%u pts.]", damage);
 }
