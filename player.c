@@ -446,6 +446,18 @@ void player_remote_look(unsigned int x, unsigned int y)
 		sq = map_square(player.level->map, x, y);
 
 		if(sq->monster) descrip = monster_name(sq->monster);
+		else {
+			switch(sq->tile) {
+			case TILE_WALL_HORIZ:
+				descrip = "wall";
+				break;
+			case TILE_DOOR_OPEN:
+				descrip = "open door";
+				break;
+			default:
+				break;
+			}
+		}
 
 		if(descrip) msg_printf("%c       %s (%s)",
 				       symbol, def->definition, descrip);
