@@ -1,3 +1,4 @@
+#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
@@ -114,7 +115,13 @@ int monster_poll(struct monst *monster)
 
 const char *monster_name(struct monst *monst)
 {
-	//static char name[32];
+	static char name[32];
+
+	if(monst->name) {
+		snprintf(name, 32, "%s called %s",
+			 monst->type->name, monst->name);
+		return name;
+	}
 
 	return monst->type->name;
 }

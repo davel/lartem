@@ -32,6 +32,7 @@ struct symbol_def symbol_defs[] = {
 	{ '<', "a staircase leading up" },
 	{ '>', "a staircase leading down" },
 
+	{ '@', "you" },
 	{ 'h', "a humanoid" },
 	{ 'i', "an imp or minor demon" },
 	{ '&', "a major demon" },
