@@ -4,6 +4,11 @@
 #include "monst.h"
 #include "level.h"
 #include "display.h"
+#include "player.h"
+#include "attack.h"
+
+
+extern struct player player;
 
 /* Standard bodys */
 
@@ -72,6 +77,17 @@ void monster_poll(struct monst *monster)
 {
 	int dx, dy;
 	struct map_square *oldsq, *newsq;
+
+
+	/* First, let's see where the player is in relation to us */
+	dx = abs(player.x - monster->x);
+	dy = abs(player.y - monster->y);
+
+	if(dx <= 1 && dy <=1) {  /* adjacent, let's attack! */
+		attack_player(monster, &player);
+		return;
+	}
+
 
 	dx = (random() % 3) - 1;
 	dy = (random() % 3) - 1;
