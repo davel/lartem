@@ -5,7 +5,10 @@
 #include "display.h"
 #include <stdio.h>
 #include <stdlib.h>
-#define MAX_ROOM_VOLUME 80
+
+
+
+#define MAX_ROOM_VOLUME (MAP_X*4)
 
 const char tile_chars[] = {
 	'.',    /* TILE_EMPTY */
@@ -38,8 +41,7 @@ unsigned int tile_cols[] = {
 void create_room(map m, int xx, int yy, int width, int height);
 void create_corridor(map m, int xcorr1, int ycorr1, int xcorr2, int ycorr2);
 
-	static int limit(int i, int l) {
-	printf("%d %d\n", i, l);
+static int limit(int i, int l) {
 	if (i>l) return l; else return i;
 }
 
@@ -62,13 +64,17 @@ map generate_map()
 
 
 	for (i=0; i<5; i++) {
-		int x, y, w, h;
+		int x, y, w, h, h_max;
 		
 		x = ourrand(0, MAP_X-5); /* Smallest room is 4x4, not 3x3, hehe, don't make it 3x3 df, without thinking */
 		y = ourrand(0, MAP_Y-5); /* heh */
 		
 		w = ourrand(4, MAP_X-x-1);
-		h = ourrand(4, MAP_Y-y-1);
+
+		h_max = limit(MAP_Y-y-1, MAX_ROOM_VOLUME/w);
+		
+		
+		h = ourrand(4, h_max);
 		
 	 	create_room(m, x, y, w, h);
 
