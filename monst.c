@@ -26,7 +26,7 @@ const struct body server_body = {
 	"upper casing",
 	"lower casing",
 	NULL,
-	NULL, 
+	NULL,
 	NULL,
 	NULL,
 	"CPU",
@@ -41,6 +41,20 @@ const struct monst_type mons[] = {
 	{ 'h', "User", &humanoid_body },
 	{ 'h', "Manager", &humanoid_body }
 };
+
+
+
+struct monst *generate_monster(const struct monst_type *type)
+{
+	struct monst *monster =
+		(struct monst *) malloc(sizeof(struct monst));
+
+	monster->name = NULL;
+	monster->type = type;
+
+	return monster;
+}
+
 
 
 char *body_text(struct monst *monst,

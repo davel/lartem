@@ -12,7 +12,7 @@ struct monst_type {
 
 struct monst {
 	const char *name;
-	struct monst_type *type;
+	const struct monst_type *type;
 
 	int floor;
 	unsigned int x, y;
@@ -20,6 +20,7 @@ struct monst {
 	struct stats stats;
 };
 
+struct monst *generate_monster(const struct monst_type *);
 char *body_text(struct monst *, const char *, unsigned int, const char *);
 
 
