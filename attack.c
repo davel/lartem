@@ -14,6 +14,7 @@ const char *user_attack_text[] = {
 	"asks you to fix its computer",
 	"asks you to fix its cupholder",
 	"asks you to fix its email",
+	"complains that its computer is slow",
 	"complains that the Internet is broken",
 	NULL
 };
@@ -22,6 +23,7 @@ const char *manager_attack_text[] = {
 	"tells you to have that report done by Thursday",
 	"tells you to attend a meeting on productivity",
 	"tells you to attend a meeting on synergy",
+	"tells you to wear a tie in future",
 	NULL
 };
 
