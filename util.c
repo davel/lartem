@@ -67,3 +67,15 @@ struct coord key_to_direction(char key)
 
 	return c;
 }
+
+
+
+/* Pick a random string from a NULL-terminated list */
+const char *random_string(const char **list)
+{
+	int n = 0;
+
+	while(list[n]) n++;
+
+	return list[random() % n];
+}
