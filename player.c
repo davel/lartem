@@ -224,12 +224,14 @@ void shadow_scan(unsigned int octant,
 void player_move(int dx, int dy)
 {
 	int xx, yy;
-	if (dx && dy) { player_move(dx, 0); player_move(0, dy); return; }
-	
+
 	xx = player.x + dx;
 	yy = player.y + dy;
 
 	if (xx<0 || xx>=MAP_X || yy<0 || yy>=MAP_Y) return;
+
+	// Eventually this'll probably make us attack the monster
+	if(player.current_map[MAP_OFFSET(xx, yy)].monster) return;
 
 	switch (player.current_map[MAP_OFFSET(xx, yy)].tile) {
 		case TILE_EMPTY:
