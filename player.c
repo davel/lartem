@@ -267,3 +267,35 @@ void player_open(int dx, int dy)
 
 	msg_printf("%s", message);
 }
+
+
+
+void player_close(int dx, int dy)
+{
+	struct map_square *sq;
+	char *message;
+
+	sq = map_square(player.current_map, player.x + dx, player.y + dy);
+	if(!sq) return;
+
+	switch(sq->tile) {
+	case TILE_DOOR_CLOSED:
+		message = "That door is already closed.";
+		break;
+
+	case TILE_DOOR_OPEN:
+		sq->tile = TILE_DOOR_CLOSED;
+		message = "You close the door.";
+		break;
+
+	case TILE_DOOR_BORKED:
+		message = "That door is broken.";
+		break;
+
+	default:
+		message = "You see no door there.";
+		break;
+	}
+
+	msg_printf("%s", message);
+}

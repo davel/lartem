@@ -55,10 +55,16 @@ int main(int argc, char *argv[])
 			c = key_to_direction(k);
 			player_move(c.x, c.y);
 			break;
+		case 'c':
+			c = key_to_direction(ask_key("In which direction?"));
+			msg_clear();
+			player_close(c.x, c.y);
+			break;
 		case 'o':
 			c = key_to_direction(ask_key("In which direction?"));
 			msg_clear();
 			player_open(c.x, c.y);
+			break;
 		}
 
 

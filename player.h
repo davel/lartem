@@ -25,5 +25,6 @@ void player_set_map(map);
 void player_see();
 void player_move(int, int);
 void player_open(int, int);
+void player_close(int, int);
 
 #endif
