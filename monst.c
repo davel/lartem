@@ -52,7 +52,7 @@ char *body_text(struct monst *monst,
 	const char **body;
 	unsigned int len = 0;
 
-	body = (const char **) monst->body;
+	body = (const char **) monst->type->body;
 
 
 	/* Start with an empty string */

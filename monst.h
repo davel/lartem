@@ -12,13 +12,13 @@ struct monst_type {
 
 struct monst {
 	const char *name;
-	monst_type *type;
+	struct monst_type *type;
 
 	int floor;
 	unsigned int x, y;
 
 	struct stats stats;
-}
+};
 
 char *body_text(struct monst *, const char *, unsigned int, const char *);
 
