@@ -28,15 +28,21 @@ int test_stat(struct stats *stats, unsigned int stat, int modifier)
 void stats_heal(struct stats *stats)
 {
 	/*
-	  Simple algorithm for now:
+	  Healing over time algorithm
 
-	  If you pass 3 constitution tests, you get an hp
+	  We want people to heal about 1hp every 10 turns,
+	  depending on their constitution
+
+	  So, roll a d10, if you get 0 you heal
+	  Otherwise, if you pass a con test you get a re-roll
 	*/
 
 	if(stats->hp < stats->hpmax) {
-		if(test_stat(stats, STAT_CON, 0) &&
-		   test_stat(stats, STAT_CON, 0) &&
-		   test_stat(stats, STAT_CON, 0))
+
+		if((!(random() % 10)) ||
+		   (test_stat(stats, STAT_CON, 0) &&
+		    (!(random() % 10))))
+
 			stats->hp++;
 	}
 }
