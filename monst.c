@@ -55,7 +55,7 @@ struct monst *generate_monster(struct level *level)
 	monster->name = NULL;
 	monster->type = mons + (random() % 2);
 
-	monster->current_map = level->map;
+	monster->level = level;
 
 	c = find_free_square(level->map);
 	monster->x = c.x;
@@ -76,11 +76,11 @@ void monster_poll(struct monst *monster)
 	dx = (random() % 3) - 1;
 	dy = (random() % 3) - 1;
 
-	oldsq = monster->current_map + MAP_OFFSET(monster->x, monster->y);
-	newsq = monster->current_map + MAP_OFFSET(monster->x + dx,
-						  monster->y + dy);
+	oldsq = monster->level->map + MAP_OFFSET(monster->x, monster->y);
+	newsq = monster->level->map + MAP_OFFSET(monster->x + dx,
+						 monster->y + dy);
 
-	if(can_move_into_square(monster->current_map,
+	if(can_move_into_square(monster->level->map,
 				monster->x + dx, monster->y + dy)) {
 		monster->x += dx;
 		monster->y += dy;

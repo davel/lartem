@@ -2,7 +2,7 @@
 #define PLAYER_H
 
 #include "monst.h"
-#include "map.h"
+#include "level.h"
 #include "stats.h"
 
 /* This struct begins exactly the same as struct monst,
@@ -12,8 +12,7 @@ struct player {
 	const char *name;
 	const struct monst_type *type;
 
-	map current_map;
-	int floor;
+	struct level *level;
 	unsigned int x, y;
 
 	struct stats stats;
@@ -29,7 +28,7 @@ struct player {
 
 int player_init();
 void player_status();
-void player_set_map(map);
+void player_set_level(struct level *);
 void player_see();
 void player_poll();
 

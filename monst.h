@@ -3,7 +3,7 @@
 
 #include "body.h"
 #include "stats.h"
-#include "map.h"
+#include "level.h"
 
 struct level;
 
@@ -18,8 +18,7 @@ struct monst {
 	const char *name;
 	const struct monst_type *type;
 
-	map current_map;
-	int floor;
+	struct level *level;
 	unsigned int x, y;
 
 	struct stats stats;

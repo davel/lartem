@@ -39,9 +39,7 @@ int player_init()
 	if(role == -1) return -1;
 	else player.role = (unsigned int) role;
 
-	player.floor = 8;
-
-	/* The player is placed into a sensible position in player_set_map() */
+	/* player is placed into a sensible position in player_set_level() */
 	player.x = 0;
 	player.y = 0;
 
@@ -56,8 +54,6 @@ int player_init()
 	player.turn = 0;
 
 	player.type = &ptypes[player.role];
-
-	player_status();
 
 	return 0;
 }
@@ -77,7 +73,7 @@ void player_status()
 
 	stat_printf("%s the %s\nFloor:%u  HP:%u(%u)  Lvl:%u  St:%u Dx:%u Co:%u In:%u Wi:%u Ch:%u  T:%u",
 		    player.name, rank,
-		    player.floor,
+		    player.level->floor,
 		    player.stats.hp, player.stats.hpmax,
 		    level,
 		    player.stats.st, player.stats.dx, player.stats.co,
@@ -86,16 +82,15 @@ void player_status()
 }
 
 
-void player_set_map(map m)
+void player_set_level(struct level *l)
 {
-	struct coord c = find_free_square(m);
+	struct coord c = find_free_square(l->map);
 
-	player.current_map = m;
+	player.level = l;
 	player.x = c.x;
 	player.y = c.y;
 
-	map_square(player.current_map, c.x, c.y)->monster =
-		(struct monst *) &player;
+	map_square(l->map, c.x, c.y)->monster = (struct monst *) &player;
 }
 
 
@@ -187,8 +182,8 @@ void shadow_scan(unsigned int octant,
 		if(x < 0 || x >= MAP_X || y < 0 || y >= MAP_Y)
 			opaque = 1;
 		else {
-			map_plot(player.current_map, x, y);
-			opaque = MAP_TILE_IS_OPAQUE(player.current_map,
+			map_plot(player.level->map, x, y);
+			opaque = MAP_TILE_IS_OPAQUE(player.level->map,
 						    x, y);
 		}
 
@@ -251,15 +246,15 @@ void player_move(int dx, int dy)
 	xx = player.x + dx;
 	yy = player.y + dy;
 
-	sq = map_square(player.current_map, xx, yy);
+	sq = map_square(player.level->map, xx, yy);
 	if(!sq) return;
 
 	// Eventually this'll probably make us attack the monster
 	if(sq->monster) return;
 
-	if(can_move_into_square(player.current_map, xx, yy)) {
-		player.current_map[MAP_OFFSET(player.x,
-					      player.y)].monster = NULL;
+	if(can_move_into_square(player.level->map, xx, yy)) {
+		player.level->map[MAP_OFFSET(player.x,
+					     player.y)].monster = NULL;
 		player.x = xx;
 		player.y = yy;
 		sq->monster = (struct monst *) &player;
@@ -273,7 +268,7 @@ void player_open(int dx, int dy)
 	struct map_square *sq;
 	char *message;
 
-	sq = map_square(player.current_map, player.x + dx, player.y + dy);
+	sq = map_square(player.level->map, player.x + dx, player.y + dy);
 	if(!sq) return;
 
 	switch(sq->tile) {
@@ -305,7 +300,7 @@ void player_close(int dx, int dy)
 	struct map_square *sq;
 	char *message;
 
-	sq = map_square(player.current_map, player.x + dx, player.y + dy);
+	sq = map_square(player.level->map, player.x + dx, player.y + dy);
 	if(!sq) return;
 
 	switch(sq->tile) {
@@ -336,7 +331,7 @@ void player_kick(int dx, int dy)
 {
 	struct map_square *sq;
 
-	sq = map_square(player.current_map, player.x + dx, player.y + dy);
+	sq = map_square(player.level->map, player.x + dx, player.y + dy);
 	if(!sq) return;
 
 	if(sq->monster) {
@@ -374,7 +369,7 @@ void player_look()
 	struct map_square *sq;
 	char *message;
 
-	sq = map_square(player.current_map, player.x, player.y);
+	sq = map_square(player.level->map, player.x, player.y);
 
 	switch(sq->tile) {
 	case TILE_DOOR_OPEN:
