@@ -47,24 +47,22 @@ const struct monst_type mons[] = {
 
 struct monst *generate_monster(struct level *level)
 {
-	map m = level->map;
-
 	struct monst *monster =
 		(struct monst *) malloc(sizeof(struct monst));
 
 	monster->name = NULL;
 	monster->type = mons;  /* TODO: decide what type of monster */
 
-	monster->current_map = m;
+	monster->current_map = level->map;
 
 	do {
 		monster->x = random() % MAP_X;
 		monster->y = random() % MAP_Y;
 
-	} while ((m[MAP_OFFSET(monster->x, monster->y)].tile != TILE_EMPTY) ||
-		 m[MAP_OFFSET(monster->x, monster->y)].monster);
+	} while (!can_move_into_square(level->map,
+				       monster->x, monster->y));
 
-	m[MAP_OFFSET(monster->x, monster->y)].monster = monster;
+	level->map[MAP_OFFSET(monster->x, monster->y)].monster = monster;
 
 	return monster;
 }

@@ -79,11 +79,9 @@ void player_set_map(map m)
 	player.current_map = m;
 
 	/* Okay, so I admit it's possible this code will never terminate. */
-	while (m[MAP_OFFSET(player.x, player.y)].tile!=TILE_EMPTY) {
+	while (!can_move_into_square(m, player.x, player.y)) {
 		player.x = random() % MAP_X;
 		player.y = random() % MAP_Y;
-
-
 	}
 }
 
