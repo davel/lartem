@@ -1,12 +1,16 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 
-#include "stats.h"
+#include "monst.h"
 #include "map.h"
+#include "stats.h"
+
+/* This struct begins exactly the same as struct monst,
+   so that we can cast it */
 
 struct player {
 	const char *name;
-	unsigned int role;
+	const struct monst_type *type;
 
 	map current_map;
 	int floor;
@@ -14,8 +18,12 @@ struct player {
 
 	struct stats stats;
 
-	unsigned int xp;
 
+	/* Stuff from here on is player-only */
+
+	unsigned int role;
+
+	unsigned int xp;
 	unsigned int turn;
 };
 

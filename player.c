@@ -16,9 +16,15 @@
 void shadow_scan(unsigned int, int, double, double);
 
 
+extern struct body humanoid_body;
+
+const struct monst_type ptypes[NUM_ROLES] = {
+	{ '@', "sysadmin", &humanoid_body },
+	{ '@', "programmer", &humanoid_body }
+};
+
+
 struct player player;
-struct monst pmonst;
-struct monst_type pmonst_type;
 
 
 int player_init()
@@ -49,9 +55,7 @@ int player_init()
 
 	player.turn = 0;
 
-	pmonst.type = &pmonst_type;
-	pmonst_type.symbol = '@';
-	pmonst_type.colour = COL_WHITE;
+	player.type = &ptypes[player.role];
 
 	player_status();
 
@@ -90,7 +94,8 @@ void player_set_map(map m)
 	player.x = c.x;
 	player.y = c.y;
 
-	map_square(player.current_map, c.x, c.y)->monster = &pmonst;
+	map_square(player.current_map, c.x, c.y)->monster =
+		(struct monst *) &player;
 }
 
 
@@ -257,7 +262,7 @@ void player_move(int dx, int dy)
 					      player.y)].monster = NULL;
 		player.x = xx;
 		player.y = yy;
-		sq->monster = &pmonst;
+		sq->monster = (struct monst *) &player;
 	}
 }
 
