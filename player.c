@@ -233,6 +233,8 @@ int player_poll()
 {
 	stats_heal(&player.stats);
 
+	player.turn++;
+
 	player_see();
 	player_status();
 
