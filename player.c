@@ -25,8 +25,10 @@ int player_init()
 	else player.role = (unsigned int) role;
 
 	player.floor = 8;
-	player.x = random() % MAP_X;
-	player.y = random() % MAP_Y;
+
+	/* The player is placed into a sensible position in player_set_map() */
+	player.x = 0;
+	player.y = 0; 
 
 	player.xp = 0;
 
@@ -70,6 +72,14 @@ void player_status()
 void player_set_map(map m)
 {
 	player.current_map = m;
+
+	/* Okay, so I admit it's possible this code will never terminate. */
+	while (m[MAP_OFFSET(player.x, player.y)].tile!=TILE_EMPTY) {
+		player.x = random() % MAP_X;
+		player.y = random() % MAP_Y;
+
+
+	}
 }
 
 
