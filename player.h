@@ -27,5 +27,6 @@ void player_move(int, int);
 void player_open(int, int);
 void player_close(int, int);
 void player_kick(int, int);
+void player_look();
 
 #endif

@@ -350,3 +350,32 @@ void player_kick(int dx, int dy)
 
 	msg_printf("%s", message);
 }
+
+
+
+void player_look()
+{
+	struct map_square *sq;
+	char *message;
+
+	sq = map_square(player.current_map, player.x, player.y);
+
+	switch(sq->tile) {
+	case TILE_DOOR_OPEN:
+		message = "an open door";
+		break;
+	case TILE_DOOR_BORKED:
+		message = "a broken door";
+		break;
+	case TILE_STAIR_UP:
+		message = "a staircase leading up";
+		break;
+	case TILE_STAIR_DOWN:
+		message = "a staircase leading down";
+		break;
+	default:
+		message = "nothing interesting";
+	}
+
+	msg_printf("There is %s here.", message);
+}

@@ -70,6 +70,9 @@ int main(int argc, char *argv[])
 			msg_clear();
 			player_kick(c.x, c.y);
 			break;
+		case ':':
+			player_look();
+			break;
 		}
 
 
