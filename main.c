@@ -14,6 +14,7 @@
 #include "util.h"
 
 void seed_rng();
+struct coord select_square(map, unsigned int, unsigned int);
 
 
 struct level levels[100];
@@ -24,7 +25,7 @@ int main(int argc, char *argv[])
 	int k;
 	struct coord c;
 	unsigned int i;
-	unsigned char running = 0;
+	unsigned char turn_taken = 1, running = 0;
 
 	seed_rng();
 
@@ -36,7 +37,11 @@ int main(int argc, char *argv[])
 	player_set_level(&levels[0]);
 
 	while(1) {
-		if(player_poll()) running = 0;
+		main_clear();
+		player_see();
+		player_status();
+
+		turn_taken = 0;
 
 		if(!running) {
 			do {
@@ -57,36 +62,52 @@ int main(int argc, char *argv[])
 		case '7':
 			c = key_to_direction(k);
 			if(!player_move(c.x, c.y)) running = 0;
+			turn_taken = 1;
 			break;
 		case 'c':
 			c = key_to_direction(ask_key("In which direction?"));
 			msg_clear();
 			player_close(c.x, c.y);
+			turn_taken = 1;
 			break;
 		case 'o':
 			c = key_to_direction(ask_key("In which direction?"));
 			msg_clear();
 			player_open(c.x, c.y);
+			turn_taken = 1;
 			break;
 		case 'k':
 			c = key_to_direction(ask_key("In which direction?"));
 			msg_clear();
 			player_kick(c.x, c.y);
-			break;
-		case ':':
-			player_look();
+			turn_taken = 1;
 			break;
 		case 'g':
 		case 'G':
 			k = ask_key("In which direction?");
 			c = key_to_direction(k);
 			if((c.x || c.y) && player_move(c.x, c.y)) running = 1;
+			turn_taken = 1;
+			break;
+		case ':':
+			player_look();
+			break;
+		case ';':
+			msg_printf("Pick an object...");
+			c = player_select_square();
+			msg_clear();
+			player_remote_look(c.x, c.y);
 			break;
 		}
 
 
-		for(i = 0; i < levels[0].nmonst; i++)
-			if(monster_poll(levels[0].monsters[i])) running = 0;
+		if(turn_taken) {
+			if(player_poll()) running = 0;
+
+			for(i = 0; i < levels[0].nmonst; i++)
+				if(monster_poll(levels[0].monsters[i]))
+					running = 0;
+		}
 	}
 
 	return 0;

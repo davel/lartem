@@ -81,7 +81,7 @@ map generate_map()
 		xcorr1 = xcorr2;
 		ycorr1 = ycorr2;
 	}
-	
+
 	return m;
 }
 
@@ -98,6 +98,7 @@ void map_plot(map m, unsigned int x, unsigned int y)
 
 	main_plot(x, y, tile_cols[sq->tile], tile_chars[sq->tile]);
 }
+
 
 
 void create_room(map m, int xx, int yy, int width, int height) {

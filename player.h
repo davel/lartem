@@ -27,6 +27,12 @@ struct player {
 	unsigned int turn;
 };
 
+struct symbol_def {
+	char symbol;
+	const char *definition;
+};
+
+
 int player_init();
 void player_status();
 void player_set_level(struct level *);
@@ -38,7 +44,10 @@ void player_open(int, int);
 void player_close(int, int);
 void player_kick(int, int);
 void player_look();
+void player_remote_look(unsigned int, unsigned int);
 
 void player_hurt(unsigned int);
+
+struct coord player_select_square();
 
 #endif

@@ -186,6 +186,7 @@ void main_plot(unsigned int x, unsigned int y, unsigned int col, char ch)
 void main_move(unsigned int x, unsigned int y)
 {
 	wmove(win_main, y, x);
+	top_panel(pnl_main);
 }
 
 
@@ -193,6 +194,13 @@ void main_move(unsigned int x, unsigned int y)
 void main_clear()
 {
 	werase(win_main);
+}
+
+
+
+char main_get_character(unsigned int x, unsigned int y)
+{
+	return winch(win_main);
 }
 
 

@@ -24,6 +24,22 @@ const struct monst_type ptypes[NUM_ROLES] = {
 	{ '@', "programmer", &humanoid_body }
 };
 
+struct symbol_def symbol_defs[] = {
+	{ '.', "the floor of a room" },
+	{ '-', "a wall or open door" },
+	{ '|', "a wall" },
+	{ '+', "a closed door" },
+	{ '<', "a staircase leading up" },
+	{ '>', "a staircase leading down" },
+
+	{ 'h', "a humanoid" },
+	{ 'i', "an imp or minor demon" },
+	{ '&', "a major demon" },
+	{ 'D', "a daemon or other program" },
+	{ 'S', "a server or other piece of hardware" },
+	{ 0, NULL }
+};
+
 
 struct player player;
 
@@ -238,10 +254,6 @@ int player_poll()
 
 	player.turn++;
 
-	main_clear();
-	player_see();
-	player_status();
-
 	return 0;
 }
 
@@ -411,6 +423,37 @@ void player_look()
 
 
 
+void player_remote_look(unsigned int x, unsigned int y)
+{
+	char symbol;
+	struct symbol_def *def;
+	struct map_square *sq;
+	const char *descrip = NULL;
+
+	symbol = main_get_character(x, y);
+
+	if(symbol == ' ') {
+		msg_printf("You can't see what's there.");
+		return;
+	}
+
+	for(def = symbol_defs; def->symbol && def->symbol != symbol; def++);
+
+
+	if(def->symbol == 0) msg_printf("Sorry, I don't know what that is.");
+	else {
+		sq = map_square(player.level->map, x, y);
+
+		if(sq->monster) descrip = monster_name(sq->monster);
+
+		if(descrip) msg_printf("%c       %s (%s)",
+				       symbol, def->definition, descrip);
+		else msg_printf("%c       %s", symbol, def->definition);
+	}
+}
+
+
+
 void player_hurt(unsigned int damage)
 {
 	damage = stats_hurt(&player.stats, damage);
@@ -421,4 +464,30 @@ void player_hurt(unsigned int damage)
 
 	player_status();
 	msg_printf("[%u pts.]", damage);
+}
+
+
+
+struct coord player_select_square()
+{
+	struct coord c, dc;
+	int k;
+
+	c.x = player.x;
+	c.y = player.y;
+
+	do {
+		main_move(c.x, c.y);
+		display_refresh();
+
+		k = display_getch();
+
+		dc = key_to_direction(k);
+
+		c.x += dc.x;
+		c.y += dc.y;
+
+	} while(k != '.');
+
+	return c;
 }

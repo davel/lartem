@@ -29,6 +29,7 @@ struct map_square {
 	struct monst *monster;
 };
 
+
 #define TILE_IS_OPAQUE(t) (t) == TILE_WALL_HORIZ || (t) == TILE_WALL_VERT || (t) == TILE_DOOR_LOCKED || (t) == TILE_DOOR_CLOSED
 
 #define MAP_TILE_IS_OPAQUE(m, x, y) TILE_IS_OPAQUE(m[MAP_OFFSET(x, y)].tile)
@@ -43,5 +44,6 @@ int is_map_square(int, int);
 struct map_square *map_square(map, int, int);
 void map_plot(map, unsigned int, unsigned int);
 void dump_map(map);
+
 
 #endif
