@@ -81,7 +81,7 @@ void monster_poll(struct monst *monster)
 						  monster->y + dy);
 
 	if(can_move_into_square(monster->current_map,
-				monster->x, monster->y)) {
+				monster->x + dx, monster->y + dy)) {
 		monster->x += dx;
 		monster->y += dy;
 
