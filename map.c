@@ -56,9 +56,9 @@ map generate_map()
 	map m;
 	unsigned int x, y;
 	int i = 0;
-	
+
 	int xcorr1, xcorr2, ycorr1, ycorr2;
-	
+
 	m = calloc(MAP_X * MAP_Y, sizeof(struct map_square));
 
 	for (x = 0; x<MAP_X; x++) for (y=0; y<MAP_Y; y++) {
@@ -68,18 +68,18 @@ map generate_map()
 
 	while (evaluate_room(m)<(MAP_X*MAP_Y/3)) {
 		int x, y, w, h, h_max;
-		
+
 		x = ourrand(0, MAP_X-5); /* Smallest room is 4x4, not 3x3, hehe, don't make it 3x3 df, without thinking */
 		y = ourrand(0, MAP_Y-5); /* heh */
-		
+
 		w = ourrand(4, limit(MAP_X-x-1, MAX_ROOM_WIDTH));
 
 		h_max = limit(MAP_Y-y-1, MAX_ROOM_VOLUME/w);
-		
-		
+
+
 		h = ourrand(4, h_max);
-		
-	 	create_room(m, x, y, w, h);
+
+		create_room(m, x, y, w, h);
 
 		xcorr2 = ourrand(x+1, x+w-3);
 		ycorr2 = ourrand(y+1, y+h-3);
@@ -99,7 +99,7 @@ void map_plot(map m, unsigned int x, unsigned int y)
 	struct map_square *sq = m + MAP_OFFSET(x, y);
 
 //	if(sq->monster) main_plot(x, y, COL_WHITE, sq->monster->type->symbol);
-//      else
+//	else
 
 	main_plot(x, y, tile_cols[sq->tile], tile_chars[sq->tile]);
 }
@@ -112,16 +112,16 @@ void create_room(map m, int xx, int yy, int width, int height) {
 		fprintf(stderr, "Bad rectangle! %d %d %d %d\n", xx, yy, width, height); exit(1);
 	}
 	if (((xx+width) >= MAP_X) || ((yy+height) >= MAP_Y)) {
-		fprintf(stderr, "Too big rectangle! %d %d %d %d\n", xx, yy, width, height); exit(1); 
+		fprintf(stderr, "Too big rectangle! %d %d %d %d\n", xx, yy, width, height); exit(1);
 	}
-	
+
 	for (x=xx; x<=(xx+width); x++) {
 		for (y=yy; y<=(yy+height); y++) {
 			struct map_square s;
-			s.tile = TILE_EMPTY; 
+			s.tile = TILE_EMPTY;
 			if (x==xx || x==(xx+width))  s.tile = TILE_WALL_VERT;
 			if (y==yy || y==(yy+height)) s.tile = TILE_WALL_HORIZ;
-			
+
 			if (m[MAP_OFFSET(x, y)].tile==TILE_UNREACHABLE) {
 				m[MAP_OFFSET(x, y)] = s;
 			} else {
@@ -144,7 +144,7 @@ void create_corridor(map m, int xcorr1, int ycorr1, int xcorr2, int ycorr2) {
 	while (ycorr1!=ycorr2) {
 		int q = 0;
 		if (ycorr1>ycorr2) ycorr1--; else ycorr1++;
-		
+
 		if (m[MAP_OFFSET(xcorr1-1, ycorr1)].tile==TILE_UNREACHABLE)
 			{ m[MAP_OFFSET(xcorr1-1, ycorr1)].tile = TILE_WALL_VERT; q++; }
 		if (m[MAP_OFFSET(xcorr1+1, ycorr1)].tile==TILE_UNREACHABLE)
@@ -154,7 +154,7 @@ void create_corridor(map m, int xcorr1, int ycorr1, int xcorr2, int ycorr2) {
 			m[MAP_OFFSET(xcorr1, ycorr1)].tile = (q==2 && done_door==0) ? TILE_DOOR_LOCKED : TILE_EMPTY;
 			if (q==2) done_door = 1;
 		}
-		
+
 	}
 
 	for (i=-1; i<2; i++) {
@@ -167,7 +167,7 @@ void create_corridor(map m, int xcorr1, int ycorr1, int xcorr2, int ycorr2) {
 	while (xcorr1!=xcorr2) {
 		int q = 0;
 		if (xcorr1>xcorr2) xcorr1--; else xcorr1++;
-		
+
 		if (m[MAP_OFFSET(xcorr1, ycorr1-1)].tile==TILE_UNREACHABLE)
 			{ m[MAP_OFFSET(xcorr1, ycorr1-1)].tile = TILE_WALL_HORIZ; q++; }
 		if (m[MAP_OFFSET(xcorr1, ycorr1+1)].tile==TILE_UNREACHABLE)
@@ -178,7 +178,7 @@ void create_corridor(map m, int xcorr1, int ycorr1, int xcorr2, int ycorr2) {
 			m[MAP_OFFSET(xcorr1, ycorr1)].tile = (q==2 && done_door==0) ? TILE_DOOR_LOCKED : TILE_EMPTY;
 			if (q==2) done_door = 1;
 		}
-	} 
+	}
 
 }
 
