@@ -24,6 +24,6 @@ void player_status();
 void player_set_map(map);
 void player_see();
 void player_move(int, int);
-
+void player_open(int, int);
 
 #endif

@@ -225,7 +225,7 @@ void player_move(int dx, int dy)
 	xx = player.x + dx;
 	yy = player.y + dy;
 
-	if (xx<0 || xx>=MAP_X || yy<0 || yy>=MAP_Y) return;
+	if(!is_map_square(xx, yy)) return;
 
 	// Eventually this'll probably make us attack the monster
 	if(player.current_map[MAP_OFFSET(xx, yy)].monster) return;
@@ -234,4 +234,23 @@ void player_move(int dx, int dy)
 		player.x = xx;
 		player.y = yy;
 	}
+}
+
+
+
+void player_open(int dx, int dy)
+{
+	struct map_square *sq = map_square(player.current_map,
+					   player.x + dx,
+					   player.y + dy);
+
+	if(!sq) return;
+
+	if(sq->tile != TILE_DOOR_CLOSED) {
+		msg_printf("You see no door there.");
+		return;
+	}
+
+	sq->tile = TILE_DOOR_OPEN;
+	msg_printf("You open the door");
 }

@@ -10,6 +10,7 @@
 #include "display.h"
 #include "player.h"
 #include "level.h"
+#include "ask.h"
 #include "util.h"
 
 void seed_rng();
@@ -40,6 +41,8 @@ int main(int argc, char *argv[])
 
 		k = display_getch();
 
+		msg_clear();
+
 		switch(k) {
 		case '8':
 		case '9':
@@ -51,6 +54,11 @@ int main(int argc, char *argv[])
 		case '7':
 			c = key_to_direction(k);
 			player_move(c.x, c.y);
+			break;
+		case 'o':
+			c = key_to_direction(ask_key("In which direction?"));
+			msg_clear();
+			player_open(c.x, c.y);
 		}
 
 

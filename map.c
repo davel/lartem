@@ -144,8 +144,8 @@ void create_corridor(map m, int xcorr1, int ycorr1, int xcorr2, int ycorr2) {
 		if (m[MAP_OFFSET(xcorr1+1, ycorr1)].tile==TILE_UNREACHABLE)
 			{ m[MAP_OFFSET(xcorr1+1, ycorr1)].tile = TILE_WALL_VERT; q++; }
 
-		if (m[MAP_OFFSET(xcorr1, ycorr1)].tile!=TILE_DOOR_LOCKED) {
-			m[MAP_OFFSET(xcorr1, ycorr1)].tile = (q==2 && done_door==0) ? TILE_DOOR_LOCKED : TILE_EMPTY;
+		if (m[MAP_OFFSET(xcorr1, ycorr1)].tile!=TILE_DOOR_CLOSED) {
+			m[MAP_OFFSET(xcorr1, ycorr1)].tile = (q==2 && done_door==0) ? TILE_DOOR_CLOSED : TILE_EMPTY;
 			if (q==2) done_door = 1;
 		}
 
@@ -168,8 +168,8 @@ void create_corridor(map m, int xcorr1, int ycorr1, int xcorr2, int ycorr2) {
 			{ m[MAP_OFFSET(xcorr1, ycorr1+1)].tile = TILE_WALL_HORIZ; q++; }
 
 
-		if (m[MAP_OFFSET(xcorr1, ycorr1)].tile!=TILE_DOOR_LOCKED) {
-			m[MAP_OFFSET(xcorr1, ycorr1)].tile = (q==2 && done_door==0) ? TILE_DOOR_LOCKED : TILE_EMPTY;
+		if (m[MAP_OFFSET(xcorr1, ycorr1)].tile!=TILE_DOOR_CLOSED) {
+			m[MAP_OFFSET(xcorr1, ycorr1)].tile = (q==2 && done_door==0) ? TILE_DOOR_CLOSED : TILE_EMPTY;
 			if (q==2) done_door = 1;
 		}
 	}
@@ -201,6 +201,24 @@ int can_move_into_square(map m, unsigned int x, unsigned int y)
 		 sq->tile == TILE_DOOR_OPEN || sq->tile == TILE_DOOR_BORKED ||
 		 sq->tile == TILE_STAIR_UP || sq->tile == TILE_STAIR_DOWN) &&
 		!sq->monster);
+}
+
+
+
+/* This is only not a macro because I have a superstitious belief that
+   one day it may depend on arcane knowledge only available to map code */
+int is_map_square(int x, int y)
+{
+	return (x >= 0 && x < MAP_X && y >= 0 && y < MAP_Y);
+}
+
+
+
+struct map_square *map_square(map m, int x, int y)
+{
+	if(!is_map_square(x, y)) return NULL;
+
+	return m + MAP_OFFSET(x, y);
 }
 
 

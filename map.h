@@ -39,6 +39,8 @@ typedef struct map_square *map;
 map generate_map();
 struct coord find_free_square(map);
 int can_move_into_square(map, unsigned int, unsigned int);
+int is_map_square(int, int);
+struct map_square *map_square(map, int, int);
 void map_plot(map, unsigned int, unsigned int);
 void dump_map(map);
 
