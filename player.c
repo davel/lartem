@@ -233,12 +233,8 @@ void player_move(int dx, int dy)
 	// Eventually this'll probably make us attack the monster
 	if(player.current_map[MAP_OFFSET(xx, yy)].monster) return;
 
-	switch (player.current_map[MAP_OFFSET(xx, yy)].tile) {
-		case TILE_EMPTY:
-		case TILE_DOOR_LOCKED:
-			player.x = xx;
-			player.y = yy;
-
-		default: return;
+	if(can_move_into_square(player.current_map, xx, yy)) {
+		player.x = xx;
+		player.y = yy;
 	}
 }

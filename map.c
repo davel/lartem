@@ -184,6 +184,20 @@ void create_corridor(map m, int xcorr1, int ycorr1, int xcorr2, int ycorr2) {
 
 }
 
+
+
+int can_move_into_square(map m, unsigned int x, unsigned int y)
+{
+	struct map_square *sq = m + MAP_OFFSET(x, y);
+
+	return ((sq->tile == TILE_EMPTY ||
+		 sq->tile == TILE_DOOR_OPEN || sq->tile == TILE_DOOR_BORKED ||
+		 sq->tile == TILE_STAIR_UP || sq->tile == TILE_STAIR_DOWN) &&
+		!sq->monster);
+}
+
+
+
 void dump_map(map m)
 {
 	unsigned int x, y;

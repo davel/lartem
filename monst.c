@@ -83,7 +83,8 @@ void monster_poll(struct monst *monster)
 	newsq = monster->current_map + MAP_OFFSET(monster->x + dx,
 						  monster->y + dy);
 
-	if(newsq->tile == TILE_EMPTY && !newsq->monster) {
+	if(can_move_into_square(monster->current_map,
+				monster->x, monster->y)) {
 		monster->x += dx;
 		monster->y += dy;
 

@@ -34,6 +34,7 @@ struct map_square {
 typedef struct map_square *map;
 
 map generate_map();
+int can_move_into_square(map, unsigned int, unsigned int);
 void map_plot(map, unsigned int, unsigned int);
 void dump_map(map);
 
