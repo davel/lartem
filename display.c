@@ -134,7 +134,7 @@ void msg_printf(const char *fmt, ...)
 	va_end(ap);
 
 	getyx(win_msg, y, x);
-	if(x && (x + strlen(str)) >= COLS) {
+	if(x && (x + strlen(str)) + 10 >= COLS) {
 		mvwaddstr(win_msg, 0, COLS - 10, "  --More--");
 		display_refresh();
 
@@ -170,7 +170,6 @@ void msg_clear()
 {
 	werase(win_msg);
 	wmove(win_msg, 0, 0);
-	display_refresh();
 }
 
 
