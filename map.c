@@ -7,8 +7,8 @@
 #include <stdlib.h>
 
 
-
-#define MAX_ROOM_VOLUME (MAP_X*4)
+#define MAX_ROOM_WIDTH 15
+#define MAX_ROOM_VOLUME (MAX_ROOM_WIDTH*4)
 
 const char tile_chars[] = {
 	'.',    /* TILE_EMPTY */
@@ -70,7 +70,7 @@ map generate_map()
 		x = ourrand(0, MAP_X-5); /* Smallest room is 4x4, not 3x3, hehe, don't make it 3x3 df, without thinking */
 		y = ourrand(0, MAP_Y-5); /* heh */
 		
-		w = ourrand(4, MAP_X-x-1);
+		w = ourrand(4, limit(MAP_X-x-1, MAX_ROOM_WIDTH));
 
 		h_max = limit(MAP_Y-y-1, MAX_ROOM_VOLUME/w);
 		
