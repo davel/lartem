@@ -40,6 +40,7 @@ unsigned int tile_cols[] = {
 
 void create_room(map m, int xx, int yy, int width, int height);
 void create_corridor(map m, int xcorr1, int ycorr1, int xcorr2, int ycorr2);
+int evaluate_room(map m);
 
 static int limit(int i, int l) {
 	if (i>l) return l; else return i;
@@ -54,7 +55,8 @@ static int ourrand(int min, int max) {
 map generate_map()
 {
 	map m;
-	unsigned int x, y, i;
+	unsigned int x, y;
+	int i = 0;
 	
 	int xcorr1, xcorr2, ycorr1, ycorr2;
 	
@@ -62,8 +64,7 @@ map generate_map()
 
 	for (x = 0; x<MAP_X; x++) for (y=0; y<MAP_Y; y++) m[MAP_OFFSET(x, y)].tile = TILE_UNREACHABLE;
 
-
-	for (i=0; i<5; i++) {
+	while (evaluate_room(m)<(MAP_X*MAP_Y/3)) {
 		int x, y, w, h, h_max;
 		
 		x = ourrand(0, MAP_X-5); /* Smallest room is 4x4, not 3x3, hehe, don't make it 3x3 df, without thinking */
@@ -81,7 +82,7 @@ map generate_map()
 		xcorr2 = ourrand(x+1, x+w-3);
 		ycorr2 = ourrand(y+1, y+h-3);
 
-		if (i>0) create_corridor(m, xcorr1, ycorr1, xcorr2, ycorr2);
+		if (i>0) create_corridor(m, xcorr1, ycorr1, xcorr2, ycorr2); else i=1;
 
 		xcorr1 = xcorr2;
 		ycorr1 = ycorr2;
@@ -178,4 +179,15 @@ void dump_map(map m)
 		for(x = 0; x < MAP_X; x++)
 			map_plot(m, x, y);
 	display_refresh();
+}
+
+int evaluate_room(map m) {
+	int x, y;
+	int i = 0;
+
+	for (x=0; x<MAP_X; x++)
+		for (y=0; y<MAP_Y; y++)
+			if (m[MAP_OFFSET(x, y)].tile!=TILE_UNREACHABLE) i++;
+
+	return i;
 }
