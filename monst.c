@@ -75,7 +75,7 @@ struct monst *generate_monster(struct level *level)
 
 
 
-void monster_poll(struct monst *monster)
+int monster_poll(struct monst *monster)
 {
 	int dx, dy;
 	struct map_square *oldsq, *newsq;
@@ -87,7 +87,7 @@ void monster_poll(struct monst *monster)
 
 	if(dx <= 1 && dy <=1) {  /* adjacent, let's attack! */
 		attack_player(monster, &player);
-		return;
+		return 1;
 	}
 
 
@@ -106,6 +106,8 @@ void monster_poll(struct monst *monster)
 		oldsq->monster = NULL;
 		newsq->monster = monster;
 	}
+
+	return 0;
 }
 
 

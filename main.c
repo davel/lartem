@@ -24,6 +24,7 @@ int main(int argc, char *argv[])
 	int k;
 	struct coord c;
 	unsigned int i;
+	unsigned char running = 0;
 
 	seed_rng();
 
@@ -37,11 +38,14 @@ int main(int argc, char *argv[])
 	while(1) {
 
 		main_clear();
-		player_poll();
 
-		do {
-			k = display_getch();
-		} while(k == ' ');
+		if(player_poll()) running = 0;
+
+		if(!running) {
+			do {
+				k = display_getch();
+			} while(k == ' ');
+		}
 
 		msg_clear();
 
@@ -55,7 +59,7 @@ int main(int argc, char *argv[])
 		case '4':
 		case '7':
 			c = key_to_direction(k);
-			player_move(c.x, c.y);
+			if(!player_move(c.x, c.y)) running = 0;
 			break;
 		case 'c':
 			c = key_to_direction(ask_key("In which direction?"));
@@ -75,11 +79,16 @@ int main(int argc, char *argv[])
 		case ':':
 			player_look();
 			break;
+		case 'g':
+		case 'G':
+			k = ask_key("In which direction?");
+			running = 1;
+			break;
 		}
 
 
 		for(i = 0; i < levels[0].nmonst; i++)
-			monster_poll(levels[0].monsters[i]);
+			if(monster_poll(levels[0].monsters[i])) running = 0;
 	}
 
 	return 0;

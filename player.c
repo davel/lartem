@@ -229,17 +229,19 @@ void shadow_scan(unsigned int octant,
 
 
 /* Anything that happens automatically once a turn for players */
-void player_poll()
+int player_poll()
 {
 	stats_heal(&player.stats);
 
 	player_see();
 	player_status();
+
+	return 0;
 }
 
 
 
-void player_move(int dx, int dy)
+int player_move(int dx, int dy)
 {
 	struct map_square *sq;
 	int xx, yy;
@@ -248,11 +250,11 @@ void player_move(int dx, int dy)
 	yy = player.y + dy;
 
 	sq = map_square(player.level->map, xx, yy);
-	if(!sq) return;
+	if(!sq) return 0;
 
 	if(sq->monster) {
 		attack_monster(&player, sq->monster);
-		return;
+		return 0;
 	}
 
 	if(can_move_into_square(player.level->map, xx, yy)) {
@@ -261,7 +263,11 @@ void player_move(int dx, int dy)
 		player.x = xx;
 		player.y = yy;
 		sq->monster = (struct monst *) &player;
+
+		return 1;
 	}
+
+	return 0;
 }
 
 
