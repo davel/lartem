@@ -9,11 +9,12 @@
 
 #include "display.h"
 #include "player.h"
-#include "map.h"
+#include "level.h"
+
+struct level levels[100];
 
 int main(int argc, char *argv[])
 {
-	map m;
 	unsigned long seed;
 	int fd;
 
@@ -22,14 +23,13 @@ int main(int argc, char *argv[])
 	read(fd, &seed, sizeof(unsigned long));
 	close(fd);
 	srandom(seed);
+
 	display_init();
+
 	if(player_init() == -1) return 0;
 
-	m = generate_map();
-	// dump_map(m);
-	// return 0;
-	
-	player_set_map(m);
+	level_init(&levels[0]);
+	player_set_map(levels[0].map);
 
 	while(1) {
 
