@@ -13,6 +13,7 @@ enum {
 
 
 void attack_player(struct monst *, struct player *);
+void attack_monster(struct player *, struct monst *);
 
 
 #endif

@@ -5,7 +5,10 @@
 #include "display.h"
 #include "player.h"
 #include "monst.h"
+#include "stats.h"
 #include "util.h"
+
+
 
 const char *user_attack_text[] = {
 	"asks you to fix its computer",
@@ -49,3 +52,15 @@ void attack_player(struct monst *monster, struct player *player)
 	}
 }
 
+
+
+void attack_monster(struct player *player, struct monst *monster)
+{
+	/* To hit roll */
+
+	if(test_stat(&player->stats, STAT_DEX, 0)) {
+
+		msg_printf("You hit the %s.", monster->type->name);
+
+	} else msg_printf("You miss the %s.", monster->type->name);
+}

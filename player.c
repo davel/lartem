@@ -10,6 +10,7 @@
 #include "display.h"
 #include "map.h"
 #include "monst.h"
+#include "attack.h"
 #include "util.h"
 
 
@@ -249,8 +250,10 @@ void player_move(int dx, int dy)
 	sq = map_square(player.level->map, xx, yy);
 	if(!sq) return;
 
-	// Eventually this'll probably make us attack the monster
-	if(sq->monster) return;
+	if(sq->monster) {
+		attack_monster(&player, sq->monster);
+		return;
+	}
 
 	if(can_move_into_square(player.level->map, xx, yy)) {
 		player.level->map[MAP_OFFSET(player.x,
