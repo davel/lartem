@@ -127,12 +127,25 @@ void msg_printf(const char *fmt, ...)
 {
 	va_list ap;
 	char str[1024];
+	int x, y;
 
 	va_start(ap, fmt);
 	vsnprintf(str, 1024, fmt, ap);
 	va_end(ap);
 
+	getyx(win_msg, y, x);
+	if(x && (x + strlen(str)) >= COLS) {
+		mvwaddstr(win_msg, 0, COLS - 10, "  --More--");
+		display_refresh();
+
+		while(getch() != ' ');
+
+		werase(win_msg);
+		wmove(win_msg, 0, 0);
+	}
+
 	waddstr(win_msg, str);
+	waddstr(win_msg, "  ");
 
 	top_panel(pnl_msg);
 	display_refresh();
