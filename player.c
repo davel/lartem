@@ -98,7 +98,7 @@ void shadow_scan(unsigned int octant,
 		 double end_slope)
 {
 	int col, start_col, end_col;
-	unsigned int blocking = 1, opaque, hack_start = 0, hack_end = 0;
+	unsigned int blocking = 1, opaque;
 	int x, y;
 
 	double new_start_slope = start_slope;
@@ -113,8 +113,7 @@ void shadow_scan(unsigned int octant,
 	start_col = (int) ((start_slope * row) + 0.5);
 	end_col = (int) ((end_slope * row) - 0.5);
 
-	if(start_col > ((int) (start_slope *row))) hack_start = 1;
-	if(end_col < ((int) (end_slope * row))) hack_end = 1;
+	if(end_col > start_col) return;
 
 
 	for(col = start_col;
@@ -163,24 +162,26 @@ void shadow_scan(unsigned int octant,
 			opaque = 1;
 		else {
 			map_plot(player.current_map, x, y);
-
-			if((hack_start && col == start_col) ||
-			   (hack_end && col == end_col))
-				opaque = 1;
-			else opaque = MAP_TILE_IS_OPAQUE(player.current_map,
-							 x, y);
+			opaque = MAP_TILE_IS_OPAQUE(player.current_map,
+						    x, y);
 		}
 
 
 		if(blocking && !opaque) {
-			new_start_slope =
-				(((double) col) + 0.5) /
-				(((double) row) + 0.5);
 
-			if(new_start_slope < 0) new_start_slope = 0;
-			else if(new_start_slope > 1) new_start_slope = 1;
+			if(col != start_col) {
+				new_start_slope =
+					(((double) col) + 0.5) /
+					(((double) row) + 0.5);
+
+				if(new_start_slope < 0)
+					new_start_slope = 0;
+				else if(new_start_slope > 1)
+					new_start_slope = 1;
+			}
 
 			blocking = 0;
+
 		} else if(!blocking && opaque) {
 
 			new_end_slope =
