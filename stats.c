@@ -19,6 +19,7 @@ int test_stat(struct stats *stats, unsigned int stat, int modifier)
 
 	val += modifier;
 	if(val <= 0) return 0;
+	if(val >= 20) return 1;
 
 	return ((random() % 20) < val);
 }
