@@ -32,6 +32,7 @@ char *msg_getstr();
 void msg_clear();
 
 void main_plot(unsigned int, unsigned int, unsigned int, char);
+void main_move(unsigned int, unsigned int);
 void main_clear();
 
 void stat_printf(const char *, ...);
