@@ -8,4 +8,6 @@ struct coord {
 int limit(int, int);
 int ourrand(int, int);
 
+struct coord key_to_direction(char);
+
 #endif

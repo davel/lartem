@@ -10,6 +10,7 @@
 #include "display.h"
 #include "player.h"
 #include "level.h"
+#include "util.h"
 
 struct level levels[100];
 
@@ -18,6 +19,8 @@ int main(int argc, char *argv[])
 	unsigned long seed;
 	int fd;
 
+	int k;
+	struct coord c;
 	unsigned int i;
 
 
@@ -39,31 +42,19 @@ int main(int argc, char *argv[])
 		main_clear();
 		player_see();
 
-		switch(display_getch()) {
+		k = display_getch();
+
+		switch(k) {
 		case '8':
-			player_move(0, -1);
-			break;
 		case '9':
-			player_move(1, -1);
-			break;
 		case '6':
-			player_move(1, 0);
-			break;
 		case '3':
-			player_move(1, 1);
-			break;
 		case '2':
-			player_move(0, 1);
-			break;
 		case '1':
-			player_move(-1, 1);
-			break;
 		case '4':
-			player_move(-1, 0);
-			break;
 		case '7':
-			player_move(-1, -1);
-			break;
+			c = key_to_direction(k);
+			player_move(c.x, c.y);
 		}
 
 
