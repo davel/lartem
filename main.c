@@ -31,7 +31,7 @@ int main(int argc, char *argv[])
 
 	if(player_init() == -1) return 0;
 
-	level_init(&levels[0]);
+	level_init(&levels[0], 8);
 	player_set_map(levels[0].map);
 
 	while(1) {

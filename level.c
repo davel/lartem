@@ -2,10 +2,11 @@
 
 #include "level.h"
 
-void level_init(struct level *level)
+void level_init(struct level *level, int floor)
 {
 	unsigned int i;
 
+	level->floor = floor;
 	level->map = generate_map();
 	level->monsters = (struct monst **) calloc(5, sizeof(struct monst *));
 	level->amonst = 5;

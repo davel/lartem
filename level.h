@@ -6,13 +6,15 @@
 
 
 struct level {
+	int floor;
+
 	map map;
 
 	struct monst **monsters;
 	unsigned int amonst, nmonst;  /* Allocated, actual */
 };
 
-void level_init(struct level *);
+void level_init(struct level *, int);
 void level_addmonster(struct level *);
 
 #endif
