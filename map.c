@@ -145,8 +145,10 @@ void create_corridor(map m, int xcorr1, int ycorr1, int xcorr2, int ycorr2) {
 		if (m[MAP_OFFSET(xcorr1+1, ycorr1)].tile==TILE_UNREACHABLE)
 			{ m[MAP_OFFSET(xcorr1+1, ycorr1)].tile = TILE_WALL_VERT; q++; }
 
-		m[MAP_OFFSET(xcorr1, ycorr1)].tile = (q==2 && done_door==0) ? TILE_DOOR_LOCKED : TILE_EMPTY;
-		if (q==2) done_door = 1;
+		if (m[MAP_OFFSET(xcorr1, ycorr1)].tile!=TILE_DOOR_LOCKED) {
+			m[MAP_OFFSET(xcorr1, ycorr1)].tile = (q==2 && done_door==0) ? TILE_DOOR_LOCKED : TILE_EMPTY;
+			if (q==2) done_door = 1;
+		}
 		
 	}
 
@@ -165,8 +167,12 @@ void create_corridor(map m, int xcorr1, int ycorr1, int xcorr2, int ycorr2) {
 			{ m[MAP_OFFSET(xcorr1, ycorr1-1)].tile = TILE_WALL_HORIZ; q++; }
 		if (m[MAP_OFFSET(xcorr1, ycorr1+1)].tile==TILE_UNREACHABLE)
 			{ m[MAP_OFFSET(xcorr1, ycorr1+1)].tile = TILE_WALL_HORIZ; q++; }
-		m[MAP_OFFSET(xcorr1, ycorr1)].tile = (q==2 && done_door==0) ? TILE_DOOR_LOCKED : TILE_EMPTY;
-		if (q==2) done_door = 1;
+
+
+		if (m[MAP_OFFSET(xcorr1, ycorr1)].tile!=TILE_DOOR_LOCKED) {
+			m[MAP_OFFSET(xcorr1, ycorr1)].tile = (q==2 && done_door==0) ? TILE_DOOR_LOCKED : TILE_EMPTY;
+			if (q==2) done_door = 1;
+		}
 	} 
 
 }
