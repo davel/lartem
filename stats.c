@@ -22,3 +22,22 @@ int test_stat(struct stats *stats, unsigned int stat, int modifier)
 
 	return ((random() % 20) < val);
 }
+
+
+
+void stats_heal(struct stats *stats)
+{
+	/*
+	  Simple algorithm for now:
+
+	  If you pass 3 constitution tests, you get an hp
+	*/
+
+	if(stats->hp < stats->hpmax) {
+		if(test_stat(stats, STAT_CON, 0) &&
+		   test_stat(stats, STAT_CON, 0) &&
+		   test_stat(stats, STAT_CON, 0))
+			stats->hp++;
+	}
+}
+

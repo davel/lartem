@@ -18,5 +18,6 @@ struct stats {
 };
 
 int test_stat(struct stats *, unsigned int, int);
+void stats_heal(struct stats *);
 
 #endif

@@ -23,6 +23,7 @@ int player_init();
 void player_status();
 void player_set_map(map);
 void player_see();
+void player_poll();
 
 void player_move(int, int);
 void player_open(int, int);

@@ -47,6 +47,8 @@ int player_init()
 	player.stats.hpmax = 8 + (random() % 8);
 	player.stats.hp = player.stats.hpmax;
 
+	player.stats.co = 6;
+
 	player.turn = 0;
 
 	pmonst.type = &pmonst_type;
@@ -223,6 +225,17 @@ void shadow_scan(unsigned int octant,
 
 	if(!blocking) shadow_scan(octant, row + 1,
 				  new_start_slope, end_slope);
+}
+
+
+
+/* Anything that happens automatically once a turn for players */
+void player_poll()
+{
+	stats_heal(&player.stats);
+
+	player_see();
+	player_status();
 }
 
 

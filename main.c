@@ -37,7 +37,7 @@ int main(int argc, char *argv[])
 	while(1) {
 
 		main_clear();
-		player_see();
+		player_poll();
 
 		k = display_getch();
 
