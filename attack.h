@@ -6,6 +6,7 @@ struct player;
 
 
 enum {
+	ATTACK_NONE,
 	ATTACK_USER,        /* Standard annoying user attack */
 	ATTACK_MANAGER      /* Slightly worse annoying manager attack */
 };

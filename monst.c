@@ -44,8 +44,10 @@ const struct body server_body = {
 
 
 const struct monst_type mons[] = {
-	{ 'h', "user", &humanoid_body, COL_GREY },
-	{ 'h', "manager", &humanoid_body, COL_RED }
+	{ 'h', "user", &humanoid_body, COL_GREY,
+      	  {ATTACK_USER, 0, 0, 0, 0, 0, 0, 0} },
+	{ 'h', "manager", &humanoid_body, COL_RED,
+	  {ATTACK_USER, ATTACK_MANAGER, 0, 0, 0, 0, 0, 0 } }
 };
 
 

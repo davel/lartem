@@ -24,13 +24,28 @@ const char *manager_attack_text[] = {
 
 void attack_player(struct monst *monster, struct player *player)
 {
-	/* TODO: different monsters should have a different range of
-	         attack types */
+	unsigned int attack_type;
 
-	msg_printf("The %s %s.",
-		   monster->type->name,
-		   random_string(user_attack_text));
+	/* This does not support monsters who don't attack */
+
+	do {
+		attack_type = monster->type->attacks[random() % 8];
+	} while(attack_type == ATTACK_NONE);
+
+	switch(attack_type) {
+	case ATTACK_USER:
+		msg_printf("The %s %s.",
+			   monster->type->name,
+			   random_string(user_attack_text));
 
 		player_hurt(5);
+		break;
+	case ATTACK_MANAGER:
+		msg_printf("The %s %s.",
+			   monster->type->name,
+			   random_string(manager_attack_text));
+		player_hurt(10);
+		break;
+	}
 }
 

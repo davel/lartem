@@ -17,7 +17,6 @@ struct player {
 
 	struct stats stats;
 
-
 	/* Stuff from here on is player-only */
 
 	unsigned int role;

@@ -12,6 +12,8 @@ struct monst_type {
 	const char *name;
 	const struct body *body;
 	unsigned int colour;
+
+	unsigned int attacks[8];
 };
 
 struct monst {
