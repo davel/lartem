@@ -65,3 +65,12 @@ char *ask_str(const char *question, const char *def)
 
 	return str;
 }
+
+
+
+int ask_key(const char *question)
+{
+	msg_printf("%s", question);
+
+	return display_getch();
+}
