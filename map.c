@@ -25,8 +25,8 @@ const char tile_chars[] = {
 
 unsigned int tile_cols[] = {
 	COL_GREY,   /* TILE_EMPTY */
-	COL_GREY,   /* TILE_WALL_HORIZ */
-	COL_GREY,   /* TILE_WALL_VERT */
+	COL_ORANGE, /* TILE_WALL_HORIZ */
+	COL_ORANGE, /* TILE_WALL_VERT */
 	COL_BROWN,  /* TILE_DOOR_LOCKED */
 	COL_BROWN,  /* TILE_DOOR_CLOSED */
 	COL_BROWN,  /* TILE_DOOR_OPEN */
