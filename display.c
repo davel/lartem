@@ -50,8 +50,7 @@ void display_init()
 		colours[COL_YELLOW] = COLOR_PAIR(4) | A_BOLD;
 
 		init_pair(5, COLOR_BLUE, COLOR_BLACK);
-		colours[COL_BLUE] = COLOR_PAIR(5);
-		colours[COL_BBLUE] = COLOR_PAIR(5) | A_BOLD;
+		colours[COL_BLUE] = COLOR_PAIR(5) | A_BOLD;
 
 		init_pair(6, COLOR_MAGENTA, COLOR_BLACK);
 		colours[COL_MAGENTA] = COLOR_PAIR(6);
