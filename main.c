@@ -36,9 +36,6 @@ int main(int argc, char *argv[])
 	player_set_level(&levels[0]);
 
 	while(1) {
-
-		main_clear();
-
 		if(player_poll()) running = 0;
 
 		if(!running) {

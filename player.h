@@ -19,6 +19,8 @@ struct player {
 
 	/* Stuff from here on is player-only */
 
+	struct stats_exe stats_exe;
+
 	unsigned int role;
 
 	unsigned int xp;

@@ -46,8 +46,10 @@ int player_init()
 
 	player.xp = 0;
 
-	for(i = 0; i < 6; i++)
+	for(i = 0; i < 6; i++) {
 		((unsigned int *) &player.stats)[i] = 4 + (random() % 12);
+		((int *) &player.stats_exe)[i] = 0;
+	}
 
 	player.stats.hpmax = 8 + (random() % 8);
 	player.stats.hp = player.stats.hpmax;
@@ -232,9 +234,11 @@ void shadow_scan(unsigned int octant,
 int player_poll()
 {
 	stats_heal(&player.stats);
+	stats_exercise(&player.stats, &player.stats_exe);
 
 	player.turn++;
 
+	main_clear();
 	player_see();
 	player_status();
 
@@ -359,6 +363,8 @@ void player_kick(int dx, int dy)
 
 		else msg_printf("You kick the door hard, but it won't budge.");
 
+		exercise_stat(&player.stats_exe, STAT_STR, 1);
+
 		break;
 
 	case TILE_WALL_HORIZ:
@@ -369,6 +375,7 @@ void player_kick(int dx, int dy)
 
 	default:
 		msg_printf("You kick at empty space.");
+		exercise_stat(&player.stats_exe, STAT_DEX, -1);
 		break;
 	}
 }

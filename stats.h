@@ -17,8 +17,18 @@ struct stats {
 	unsigned int hp, hpmax;
 };
 
+struct stats_exe {  /* for exercising stats */
+	int st, dx, co, in, wi, ch;
+};
+
 int test_stat(struct stats *, unsigned int, int);
+void exercise_stat(struct stats_exe *, unsigned int, int);
+
+void increment_stat(struct stats *, unsigned int);
+void decrement_stat(struct stats *, unsigned int);
+
 void stats_heal(struct stats *);
 unsigned int stats_hurt(struct stats *, unsigned int);
+void stats_exercise(struct stats *, struct stats_exe *);
 
 #endif

@@ -2,6 +2,8 @@
 
 #include "stats.h"
 
+#include "display.h"
+
 
 /*
   Roll a d20 - if the result is less that their
@@ -22,6 +24,80 @@ int test_stat(struct stats *stats, unsigned int stat, int modifier)
 	if(val >= 20) return 1;
 
 	return ((random() % 20) < val);
+}
+
+
+
+void exercise_stat(struct stats_exe *s, unsigned int stat, int direction)
+{
+	((int *) s)[stat] += direction;
+}
+
+
+void increment_stat(struct stats *stats, unsigned int stat)
+{
+	char *message;
+
+	if(((unsigned int *) stats)[stat] >= 16) return;
+
+	((unsigned int *) stats)[stat]++;
+
+	switch(stat) {
+	case STAT_STR:
+		message = "stronger";
+		break;
+	case STAT_DEX:
+		message = "more dextrous";
+		break;
+	case STAT_CON:
+		message = "tougher";
+		break;
+	case STAT_INT:
+		message = "more intelligent";
+		break;
+	case STAT_WIS:
+		message = "wiser";
+		break;
+	case STAT_CHA:
+		message = "more charismatic";
+		break;
+	}
+
+	msg_printf("You feel a little %s.", message);
+}
+
+
+
+void decrement_stat(struct stats *stats, unsigned int stat)
+{
+	char *message;
+
+	if(((unsigned int *) stats)[stat] <= 1) return;
+
+	((unsigned int *) stats)[stat]--;
+
+	switch(stat) {
+	case STAT_STR:
+		message = "weaker";
+		break;
+	case STAT_DEX:
+		message = "less dextrous";
+		break;
+	case STAT_CON:
+		message = "less tough";
+		break;
+	case STAT_INT:
+		message = "less intelligent";
+		break;
+	case STAT_WIS:
+		message = "less wise";
+		break;
+	case STAT_CHA:
+		message = "less charismatic";
+		break;
+	}
+
+	msg_printf("You feel a little %s.", message);
 }
 
 
@@ -74,4 +150,33 @@ unsigned int stats_hurt(struct stats *stats, unsigned int damage)
 	else stats->hp = 0;
 
 	return damage;
+}
+
+
+
+void stats_exercise(struct stats *stats, struct stats_exe *stats_e)
+{
+	unsigned int i, current;
+	int level, threshold;
+
+	for(i = 0; i< 6; i++) {
+
+		/* There's only a chance that the stat will change this turn */
+		if(random() % 3) continue;
+
+		current = ((unsigned int *) stats)[i];
+		level = ((int *) stats_e)[i];
+
+		threshold = (current * current) + 8;
+
+		if((current < 16) && (level >= threshold)) {
+			increment_stat(stats, i);
+			((int *) stats_e)[i] = 0;
+		}
+
+		if((current > 1) && (level <= -32)) {
+			decrement_stat(stats, i);
+			((int *) stats_e)[i] = 0;
+		}
+	}
 }
