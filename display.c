@@ -174,7 +174,6 @@ void main_plot(unsigned int x, unsigned int y, unsigned int col, char ch)
 void main_clear()
 {
 	werase(win_main);
-	display_refresh();
 }
 
 
