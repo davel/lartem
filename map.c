@@ -7,7 +7,7 @@
 #include <stdlib.h>
 
 
-#define MAX_ROOM_WIDTH 15
+#define MAX_ROOM_WIDTH 10
 #define MAX_ROOM_VOLUME (MAX_ROOM_WIDTH*4)
 
 const char tile_chars[] = {
