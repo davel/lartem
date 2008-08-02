@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <curses.h>
 
 #include "util.h"
 
@@ -23,7 +24,7 @@ int ourrand(int min, int max) {
 
 
 
-struct coord key_to_direction(char key)
+struct coord key_to_direction(int key)
 {
 	struct coord c;
 
@@ -33,6 +34,7 @@ struct coord key_to_direction(char key)
 		c.y = 1;
 		break;
 	case '2':
+	case KEY_DOWN:
 		c.x = 0;
 		c.y = 1;
 		break;
@@ -41,10 +43,12 @@ struct coord key_to_direction(char key)
 		c.y = 1;
 		break;
 	case '4':
+	case KEY_LEFT:
 		c.x = -1;
 		c.y = 0;
 		break;
 	case '6':
+	case KEY_RIGHT:
 		c.x = 1;
 		c.y = 0;
 		break;
@@ -53,6 +57,7 @@ struct coord key_to_direction(char key)
 		c.y = -1;
 		break;
 	case '8':
+	case KEY_UP:
 		c.x = 0;
 		c.y = -1;
 		break;
