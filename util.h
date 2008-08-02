@@ -8,7 +8,7 @@ struct coord {
 int limit(int, int);
 int ourrand(int, int);
 
-struct coord key_to_direction(char);
+struct coord key_to_direction(int);
 
 const void *random_element(const void **);
 

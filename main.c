@@ -6,6 +6,7 @@
 #include <fcntl.h>
 #include <stdio.h>
 #include <unistd.h>
+#include <curses.h>
 
 #include "display.h"
 #include "player.h"
@@ -56,6 +57,10 @@ int main(int argc, char *argv[])
 		case '1':
 		case '4':
 		case '7':
+		case KEY_UP:
+		case KEY_DOWN:
+		case KEY_LEFT:
+		case KEY_RIGHT:
 			c = key_to_direction(k);
 			if(!player_move(c.x, c.y)) running = 0;
 			turn_taken = 1;
