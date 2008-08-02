@@ -58,7 +58,7 @@ map generate_map()
 		m[MAP_OFFSET(x, y)].monster = NULL;
 	}
 
-	while (evaluate_room(m)<(MAP_X*MAP_Y/3)) {
+	while (evaluate_room(m)<(MAP_X*MAP_Y/2)) {
 		int x, y, w, h, h_max;
 
 		x = ourrand(0, MAP_X-5); /* Smallest room is 4x4, not 3x3, hehe, don't make it 3x3 df, without thinking */
