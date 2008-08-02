@@ -29,6 +29,7 @@ void display_init()
 	curs_set(1);
 
 	nodelay(stdscr, FALSE);
+	keypad(stdscr, TRUE);
 
 
 	if(has_colors()) {
