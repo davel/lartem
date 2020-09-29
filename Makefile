@@ -1,4 +1,4 @@
-CC = gcc -Wall -g
+CC = gcc -Wall -Werror -g
 LD = gcc -g
 
 OBJS = main.o display.o player.o role.o monst.o ask.o level.o map.o util.o stats.o attack.o
